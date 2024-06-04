@@ -1,4 +1,5 @@
-import './globals.css'; 
+import './globals.css';
+import { Toaster } from 'react-hot-toast';
 
 export const metadata = {
   title: 'InveeSync Assignment',
@@ -8,6 +9,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
+      <Toaster position="top-center" />
       <body>{children}</body>
     </html>
   );

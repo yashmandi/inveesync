@@ -13,7 +13,7 @@ const OrderList = () => {
         let filteredOrders = data.orders;
 
         if (filter) {
-            filteredOrders = filteredOrders.filter(order => orders.status === filter);
+            filteredOrders = filteredOrders.filter(order => order.status === filter);
         }
 
         if (sortKey === 'customer') {
@@ -54,10 +54,10 @@ const OrderList = () => {
             </div>
             <ul>
                 {orders.map(order => (
-                    <li key={orders.id} className="border-b py-2">
+                    <li key={order.id} className="border-b py-2">
                         <div className="flex justify-between">
                             <div>
-                                <h2 className="text-xl font-semibold">Order ID: {orders.id}</h2>
+                                <h2 className="text-xl font-semibold">Order ID: {order.id}</h2>
                                 <p>Customer: {order.customer}</p>
                                 <p>Status: {order.status}</p>
                                 <p>Item Count: {order.items.length}</p>

@@ -1,18 +1,16 @@
-"use client";
-
-import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useRouter } from 'next/navigation';
+import { useState } from 'react';
 import { data } from "../../../utils/data";
 
 const OrderDetails = () => {
     const router = useRouter();
-    const id = router.query?.id;
+    const { id } = router.query || {}; // Use destructuring with default value
 
-    const order = data.orders.find(order => order.id === parseInt(id))
+    const order = data.orders.find(order => order.id === parseInt(id));
 
     const [orderStatus, setOrderStatus] = useState(order ? order.status : '');
 
-    if (!order) {
+    if (!router.query.id) { // Check if id exists in router.query
         return <div>Order not found</div>;
     }
 
