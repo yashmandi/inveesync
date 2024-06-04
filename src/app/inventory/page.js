@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { data } from "../../utils/data";
 import toast from "react-hot-toast";
+import Spinner from "../../components/spinner";
 
 const InventoryList = () => {
     const [items, setItems] = useState(data.items);
@@ -10,10 +11,15 @@ const InventoryList = () => {
     const [newItem, setNewItem] = useState({ name: '', stock: '' });
     const [editItem, setEditItem] = useState(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [loading, setLoading] = useState(false); // Loading state
 
     const handleDelete = (id) => {
-        setItems(items.filter(item => item.id !== id));
-        toast.success('Item deleted successfully!');
+        setLoading(true); // Show spinner
+        setTimeout(() => { // Simulate async operation
+            setItems(items.filter(item => item.id !== id));
+            setLoading(false); // Hide spinner
+            toast.success('Item deleted successfully!');
+        }, 1000);
     };
 
     const handleFilterChange = (e) => {
@@ -22,15 +28,19 @@ const InventoryList = () => {
 
     const handleAddItem = (e) => {
         e.preventDefault();
-        const newItemData = {
-            id: items.length + 1,
-            name: newItem.name,
-            stock: parseInt(newItem.stock)
-        };
-        setItems([...items, newItemData]);
-        setNewItem({ name: '', stock: '' });
-        setIsModalOpen(false);
-        toast.success('Item added successfully!');
+        setLoading(true); // Show spinner
+        setTimeout(() => { // Simulate async operation
+            const newItemData = {
+                id: items.length + 1,
+                name: newItem.name,
+                stock: parseInt(newItem.stock)
+            };
+            setItems([...items, newItemData]);
+            setNewItem({ name: '', stock: '' });
+            setIsModalOpen(false);
+            setLoading(false); // Hide spinner
+            toast.success('Item added successfully!');
+        }, 1000);
     };
 
     const handleEditItem = (id) => {
@@ -40,9 +50,13 @@ const InventoryList = () => {
 
     const handleSaveEdit = (e) => {
         e.preventDefault();
-        setItems(items.map(item => item.id === editItem.id ? editItem : item));
-        setEditItem(null);
-        toast.success('Item updated successfully!');
+        setLoading(true); // Show spinner
+        setTimeout(() => { // Simulate async operation
+            setItems(items.map(item => item.id === editItem.id ? editItem : item));
+            setEditItem(null);
+            setLoading(false); // Hide spinner
+            toast.success('Item updated successfully!');
+        }, 1000);
     };
 
     const filteredItems = items.filter(item => {
@@ -57,6 +71,7 @@ const InventoryList = () => {
 
     return (
         <div className="container mx-auto p-4">
+            {loading && <Spinner />} {/* Show spinner if loading */}
             <h1 className="text-2xl font-bold mb-4">Inventory List</h1>
 
             <div className="mb-4">
@@ -182,7 +197,6 @@ const InventoryList = () => {
                 ))}
             </ul>
         </div>
-
     );
 };
 
