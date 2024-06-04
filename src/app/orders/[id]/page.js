@@ -1,18 +1,29 @@
+"use client";
+
 import { useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { data } from "../../../utils/data";
 
 const OrderDetails = () => {
     const router = useRouter();
-    const { id } = router.query || {}; // Use destructuring with default value
+    // const { id } = router.query || {}; 
+    const { isReady, id } = router || {};
+
+    useEffect(() => {
+        if (!isReady) {
+            console.log('Router not ready');
+            return;
+        }
+        console.log(`ID: ${id}`);
+    }, [isReady]);
+
+    if (!id) {
+        return <div className="container mx-auto p-4">Order not found</div>;
+    }
 
     const order = data.orders.find(order => order.id === parseInt(id));
 
     const [orderStatus, setOrderStatus] = useState(order ? order.status : '');
-
-    if (!router.query.id) { // Check if id exists in router.query
-        return <div>Order not found</div>;
-    }
 
     const handleMarkAsCompleted = () => {
         order.status = 'Completed';

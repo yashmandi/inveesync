@@ -79,7 +79,7 @@ const InventoryList = () => {
                 <select
                     id="stockFilter"
                     onChange={handleFilterChange}
-                    className="border rounded px-2 py-1 bg-black"
+                    className="focus:outline-none text-gray-900  bg-gray-700 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm h-8 items px-1 w-32 dark:bg-white dark:hover:bg-gray-200 ml-2 dark:focus:ring-gray-900"
                 >
                     <option value="">All</option>
                     <option value="inStock">In Stock</option>
@@ -89,7 +89,7 @@ const InventoryList = () => {
 
             <button
                 onClick={() => setIsModalOpen(true)}
-                className="bg-blue-500 text-white px-4 py-2 rounded mb-4"
+                className="focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900"
             >
                 Add New Item
             </button>
@@ -179,16 +179,16 @@ const InventoryList = () => {
                             <p>Name: {item.name}</p>
                             <p>Stock: {item.stock}</p>
                         </div>
-                        <div>
+                        <div className="flex space-x-4">
                             <button
                                 onClick={() => handleEditItem(item.id)}
-                                className="text-yellow-500 mr-4"
+                                className="focus:outline-none text-gray-900  hover:bg-gray-200 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4  mb-2 dark:bg-gray-100 dark:hover:bg-gray-200 dark:focus:ring-gray-900"
                             >
                                 Edit
                             </button>
                             <button
                                 onClick={() => handleDelete(item.id)}
-                                className="text-red-500"
+                                className="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-4 mb-2 dark:bg-red-700 dark:hover:bg-red-900 dark:focus:ring-red-800"
                             >
                                 Delete
                             </button>

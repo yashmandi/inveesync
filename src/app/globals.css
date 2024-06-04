@@ -4,23 +4,34 @@
 
 :root {
   --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+  --background-start-rgb: 246, 248, 250;
+  /* Light gray */
+  --background-end-rgb: 221, 229, 235;
+  /* Slightly darker gray; */
+  --bg-gradient: linear-gradient(to right, #8080800a 1px, transparent 1px), linear-gradient(to bottom, #8080800a 1px, transparent 1px);
+  --bg-size: 14px 24px;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
     --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
+    --background-start-rgb: 37, 42, 52;
+    /* Dark blue */
+    --background-end-rgb: 16, 23, 30;
+    /* Even darker blue */
   }
 }
 
 body {
   color: rgb(var(--foreground-rgb));
-  background: linear-gradient(to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))) rgb(var(--background-start-rgb));
+  background: var(--bg-gradient), rgb(var(--background-start-rgb));
+  background-size: var(--bg-size);
+  /* Adding a modern font  */
+  line-height: 1.6;
+  /* Improved readability */
+  padding: 2rem;
+  /* Adding some breathing room */
+  position: relative;
 }
 
 @layer utilities {

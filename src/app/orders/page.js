@@ -2,12 +2,13 @@
 
 import { useEffect, useState } from "react";
 import { data } from "../../utils/data";
-import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 const OrderList = () => {
     const [orders, setOrders] = useState(data.orders);
     const [filter, setFilter] = useState('');
     const [sortKey, setSortKey] = useState('');
+    const router = useRouter();
 
     useEffect(() => {
         let filteredOrders = data.orders;
@@ -33,11 +34,11 @@ const OrderList = () => {
                 <select
                     id="statusFilter"
                     onChange={e => setFilter(e.target.value)}
-                    className="border rounded px-2 py-1 bg-black"
+                    className="focus:outline-none text-gray-900  bg-gray-700 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm h-8 items px-1 dark:bg-white dark:hover:bg-gray-200 ml-2 dark:focus:ring-gray-900"
                 >
-                    <option value="">All</option>
-                    <option value="Pending">Pending</option>
-                    <option value="Completed">Completed</option>
+                    <option value="" >All</option>
+                    <option value="Pending" >Pending</option>
+                    <option value="Completed" >Completed</option>
                 </select>
             </div>
             <div className="mb-4">
@@ -45,7 +46,7 @@ const OrderList = () => {
                 <select
                     id="sortKey"
                     onChange={e => setSortKey(e.target.value)}
-                    className="border rounded px-2 py-1 bg-black"
+                    className="focus:outline-none text-gray-900  bg-gray-700 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm h-8 items px-1 w-32 dark:bg-white dark:hover:bg-gray-200 ml-2 dark:focus:ring-gray-900"
                 >
                     <option value="">None</option>
                     <option value="customer">Customer Name</option>
@@ -62,9 +63,14 @@ const OrderList = () => {
                                 <p>Status: {order.status}</p>
                                 <p>Item Count: {order.items.length}</p>
                             </div>
-                            <Link href={`/orders/${order.id}`}>
-                                <button className="text-blue-500">View Details</button>
-                            </Link>
+
+                            <button
+                                onClick={() => router.push(`/orders/[id]`)}
+                                className="focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm h-10 items px-5 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900"
+                            >
+                                View Details
+                            </button>
+
                         </div>
                     </li>
                 ))}
