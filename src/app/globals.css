@@ -25,6 +25,7 @@
 body {
   color: rgb(var(--foreground-rgb));
   background: var(--bg-gradient), rgb(var(--background-start-rgb));
+  font: "Inter", sans-serif;
   background-size: var(--bg-size);
   /* Adding a modern font  */
   line-height: 1.6;
