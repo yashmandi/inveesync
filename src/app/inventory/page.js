@@ -1,4 +1,3 @@
-// src/app/inventory/page.js
 "use client";
 
 import { useState, useEffect } from "react";
@@ -12,13 +11,15 @@ const InventoryList = ({ searchTerm }) => {
     const [newItem, setNewItem] = useState({ name: '', stock: '' });
     const [editItem, setEditItem] = useState(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [loading, setLoading] = useState(false); // Loading state
+    const [loading, setLoading] = useState(false);
+    const [currentPage, setCurrentPage] = useState(1);
+    const itemsPerPage = 8;
 
     const handleDelete = (id) => {
-        setLoading(true); // Show spinner
-        setTimeout(() => { // Simulate async operation
+        setLoading(true);
+        setTimeout(() => {
             setItems(items.filter(item => item.id !== id));
-            setLoading(false); // Hide spinner
+            setLoading(false);
             toast.success('Item deleted successfully!');
         }, 1000);
     };
@@ -29,8 +30,8 @@ const InventoryList = ({ searchTerm }) => {
 
     const handleAddItem = (e) => {
         e.preventDefault();
-        setLoading(true); // Show spinner
-        setTimeout(() => { // Simulate async operation
+        setLoading(true);
+        setTimeout(() => {
             const newItemData = {
                 id: items.length + 1,
                 name: newItem.name,
@@ -39,7 +40,7 @@ const InventoryList = ({ searchTerm }) => {
             setItems([...items, newItemData]);
             setNewItem({ name: '', stock: '' });
             setIsModalOpen(false);
-            setLoading(false); // Hide spinner
+            setLoading(false);
             toast.success('Item added successfully!');
         }, 1000);
     };
@@ -51,11 +52,11 @@ const InventoryList = ({ searchTerm }) => {
 
     const handleSaveEdit = (e) => {
         e.preventDefault();
-        setLoading(true); // Show spinner
-        setTimeout(() => { // Simulate async operation
+        setLoading(true);
+        setTimeout(() => {
             setItems(items.map(item => item.id === editItem.id ? editItem : item));
             setEditItem(null);
-            setLoading(false); // Hide spinner
+            setLoading(false);
             toast.success('Item updated successfully!');
         }, 1000);
     };
@@ -72,9 +73,20 @@ const InventoryList = ({ searchTerm }) => {
         }
     });
 
+    const indexOfLastItem = currentPage * itemsPerPage;
+    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+    const currentItems = filteredItems.slice(indexOfFirstItem, indexOfLastItem);
+
+    const pageNumbers = [];
+    for (let i = 1; i <= Math.ceil(filteredItems.length / itemsPerPage); i++) {
+        pageNumbers.push(i);
+    }
+
+    const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
     return (
         <div className="container mx-auto p-4">
-            {loading && <Spinner />} {/* Show spinner if loading */}
+            {loading && <Spinner />}
             <h1 className="text-2xl font-bold mb-4">Inventory List</h1>
 
             <div className="mb-4">
@@ -82,7 +94,7 @@ const InventoryList = ({ searchTerm }) => {
                 <select
                     id="stockFilter"
                     onChange={handleFilterChange}
-                    className="focus:outline-none text-gray-900  bg-gray-700 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm h-8 items px-1 w-32 dark:bg-white dark:hover:bg-gray-200 ml-2 dark:focus:ring-gray-900"
+                    className="focus:outline-none text-gray-900 bg-gray-700 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm h-8 items px-1 w-32 dark:bg-white dark:hover:bg-gray-200 ml-2 dark:focus:ring-gray-900"
                 >
                     <option value="">All</option>
                     <option value="inStock">In Stock</option>
@@ -178,34 +190,52 @@ const InventoryList = ({ searchTerm }) => {
             <table className="table-auto w-full">
                 <thead>
                     <tr>
-                        <th className="px-4 py-2">Item</th>
-                        <th className="px-4 py-2">Stock</th>
-                        <th className="px-4 py-2">Actions</th>
+                        <th className="border border-2 bg-gray-600 font-extrabold px-4 py-2">Items</th>
+                        <th className="border border-2 bg-gray-600 font-extrabold px-4 py-2">Stock</th>
+                        <th className="border border-2 bg-gray-600 font-extrabold px-4 py-2">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {filteredItems.map(item => (
+                    {currentItems.map(item => (
                         <tr key={item.id}>
-                            <td className="border px-4 py-2">{item.name}</td>
-                            <td className="border px-4 py-2">{item.stock}</td>
-                            <td className="border px-4 py-2">
-                                <button
-                                    onClick={() => handleDelete(item.id)}
-                                    className="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-2 py-1 mr-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"
-                                >
-                                    Delete
-                                </button>
+                            <td className="border px-4 py-2  ">{item.name}</td>
+                            <td className="border px-4 py-2  ">{item.stock}</td>
+                            <td className="border px-4 py-2 flex justify-center">
                                 <button
                                     onClick={() => handleEditItem(item.id)}
-                                    className="focus:outline-none text-white bg-yellow-700 hover:bg-yellow-800 focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-sm px-2 py-1 dark:bg-yellow-600 dark:hover:bg-yellow-700 dark:focus:ring-yellow-900"
+                                    className="focus:outline-none text-white bg-yellow-700 hover:bg-yellow-800 focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg mr-2 text-sm px-3 py-2 dark:bg-yellow-600 dark:hover:bg-yellow-700 dark:focus:ring-yellow-900"
                                 >
                                     Edit
                                 </button>
+                                <button
+                                    onClick={() => handleDelete(item.id)}
+                                    className="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-2 py-1  dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"
+                                >
+                                    Delete
+                                </button>
+
                             </td>
                         </tr>
                     ))}
                 </tbody>
             </table>
+
+            <div className="flex justify-center mt-4">
+                <nav>
+                    <ul className="inline-flex items-center -space-x-px">
+                        {pageNumbers.map(number => (
+                            <li key={number}>
+                                <button
+                                    onClick={() => paginate(number)}
+                                    className={`px-3 py-2 leading-tight ${currentPage === number ? 'bg-blue-600 hover:bg-blue-700 text-white' : 'bg-white text-gray-900 hover:bg-gray-200'} border border-gray-300 rounded-lg ml-2 mt-8`}
+                                >
+                                    {number}
+                                </button>
+                            </li>
+                        ))}
+                    </ul>
+                </nav>
+            </div>
         </div>
     );
 };
