@@ -4,10 +4,18 @@ import React, { useState } from 'react';
 import './globals.css';
 import { Toaster } from 'react-hot-toast';
 import Link from 'next/link';
+import Spinner from '../components/spinner'; // Adjust the path if necessary
 
 export default function RootLayout({ children }) {
-
   const [searchTerm, setSearchTerm] = useState('');
+  const [loading, setLoading] = useState(false);
+
+  const handleNavigation = (url) => {
+    setLoading(true);
+    setTimeout(() => {
+      window.location.href = url;
+    }, 500); // Adjust the timeout as necessary to show the spinner
+  };
 
   return (
     <html lang="en">
@@ -19,12 +27,18 @@ export default function RootLayout({ children }) {
           </h1>
           <div className="flex space-x-4 justify-between mb-4">
             <div className='flex space-x-4 justify-items-start '>
-              <Link href="/inventory">
-                <button className="focus:outline-none text-gray-900 hover:text-gray-900 bg-gray-700 hover:bg-gray-800 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm h-10 items px-5 dark:bg-white dark:hover:bg-gray-200 dark:focus:ring-gray-900">Inventory</button>
-              </Link>
-              <Link href="/orders">
-                <button className="focus:outline-none text-gray-900 hover:text-gray-900 bg-gray-700 hover:bg-gray-800 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm h-10 items px-5 dark:bg-white dark:hover:bg-gray-200 dark:focus:ring-gray-900">Orders</button>
-              </Link>
+              <button
+                onClick={() => handleNavigation('/inventory')}
+                className="focus:outline-none text-gray-900 hover:text-gray-900 bg-gray-700 hover:bg-gray-800 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm h-10 items px-5 dark:bg-white dark:hover:bg-gray-200 dark:focus:ring-gray-900"
+              >
+                Inventory
+              </button>
+              <button
+                onClick={() => handleNavigation('/orders')}
+                className="focus:outline-none text-gray-900 hover:text-gray-900 bg-gray-700 hover:bg-gray-800 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm h-10 items px-5 dark:bg-white dark:hover:bg-gray-200 dark:focus:ring-gray-900"
+              >
+                Orders
+              </button>
             </div>
 
             <div className='flex space-x-4 justify-items-end '>
@@ -38,7 +52,7 @@ export default function RootLayout({ children }) {
             </div>
           </div>
         </div>
-        {React.cloneElement(children, { searchTerm })}
+        {loading ? <Spinner /> : React.cloneElement(children, { searchTerm })}
       </body>
     </html>
   );
