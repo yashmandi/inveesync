@@ -11,16 +11,25 @@ const InventoryList = ({ searchTerm }) => {
     const [newItem, setNewItem] = useState({ name: '', stock: '' });
     const [editItem, setEditItem] = useState(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+    const [itemToDelete, setItemToDelete] = useState(null);
     const [loading, setLoading] = useState(false);
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 8;
 
     const handleDelete = (id) => {
+        setItemToDelete(id);
+        setIsDeleteModalOpen(true);
+    };
+
+    const confirmDelete = () => {
         setLoading(true);
         setTimeout(() => {
-            setItems(items.filter(item => item.id !== id));
+            setItems(items.filter(item => item.id !== itemToDelete));
             setLoading(false);
             toast.success('Item deleted successfully!');
+            setIsDeleteModalOpen(false);
+            setItemToDelete(null);
         }, 1000);
     };
 
@@ -97,7 +106,7 @@ const InventoryList = ({ searchTerm }) => {
 
             <div className="flex flex-row justify-between p-2">
                 <div className="">
-                    <label htmlFor="stockFilter" className="mr-2">Filter by stock:</label>
+                    <label htmlFor="stockFilter" className="mr-2 transition-all">Filter by stock:</label>
                     <select
                         id="stockFilter"
                         onChange={handleFilterChange}
@@ -111,7 +120,7 @@ const InventoryList = ({ searchTerm }) => {
 
                 <button
                     onClick={() => setIsModalOpen(true)}
-                    className="focus:outline-none text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-4 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-900"
+                    className="focus:outline-none text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 transition-all py-2.5 mb-4 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-900"
                 >
                     Add New Item
                 </button>
@@ -140,13 +149,13 @@ const InventoryList = ({ searchTerm }) => {
                                 <button
                                     type="button"
                                     onClick={() => setIsModalOpen(false)}
-                                    className="focus:outline-none text-gray bg-gray-700 hover:bg-gray-800 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm p-2 px-4 mb-2 dark:bg-gray-700 dark:hover:bg-gray-900 dark:focus:ring-gray-800"
+                                    className="focus:outline-none text-gray bg-gray-700 hover:bg-gray-800 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg transition-all text-sm p-2 px-4 mb-2 dark:bg-gray-700 dark:hover:bg-gray-900 dark:focus:ring-gray-800"
                                 >
                                     Cancel
                                 </button>
                                 <button
                                     type="submit"
-                                    className="focus:outline-none text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm p-2 px-4 mb-2 dark:bg-blue-700 dark:hover:bg-blue-900 dark:focus:ring-blue-800"
+                                    className="focus:outline-none text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium transition-all rounded-lg text-sm p-2 px-4 mb-2 dark:bg-blue-700 dark:hover:bg-blue-900 dark:focus:ring-blue-800"
                                 >
                                     Add
                                 </button>
@@ -179,18 +188,43 @@ const InventoryList = ({ searchTerm }) => {
                                 <button
                                     type="button"
                                     onClick={() => setEditItem(null)}
-                                    className="focus:outline-none text-gray bg-gray-700 hover:bg-gray-800 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm p-2 px-4 mb-2 dark:bg-gray-700 dark:hover:bg-gray-900 dark:focus:ring-gray-800"
+                                    className="focus:outline-none text-gray bg-gray-700 hover:bg-gray-800 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg transition-all text-sm p-2 px-4 mb-2 dark:bg-gray-700 dark:hover:bg-gray-900 dark:focus:ring-gray-800"
                                 >
                                     Cancel
                                 </button>
                                 <button
                                     type="submit"
-                                    className="focus:outline-none text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm p-2 px-4 mb-2 dark:bg-blue-700 dark:hover:bg-blue-900 dark:focus:ring-blue-800"
+                                    className="focus:outline-none text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium transition-all rounded-lg text-sm p-2 px-4 mb-2 dark:bg-blue-700 dark:hover:bg-blue-900 dark:focus:ring-blue-800"
                                 >
                                     Save
                                 </button>
                             </div>
                         </form>
+                    </div>
+                </div>
+            )}
+
+            {isDeleteModalOpen && (
+                <div className="fixed inset-0 backdrop-blur-sm bg-opacity-50 flex justify-center items-center">
+                    <div className="bg-[#191d24] p-4 rounded-lg border border-gray-500 shadow-lg">
+                        <h2 className="text-xl font-bold mb-4">Confirm Delete</h2>
+                        <p className="mb-4">Are you sure you want to delete this item?</p>
+                        <div className="flex justify-end gap-4 mt-2">
+                            <button
+                                type="button"
+                                onClick={() => setIsDeleteModalOpen(false)}
+                                className="focus:outline-none text-gray bg-gray-700 hover:bg-gray-800 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg transition-all text-sm p-2 px-4 mb-2 dark:bg-gray-700 dark:hover:bg-gray-900 dark:focus:ring-gray-800"
+                            >
+                                Cancel
+                            </button>
+                            <button
+                                type="button"
+                                onClick={confirmDelete}
+                                className="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg transition-all text-sm p-2 px-4 mb-2 dark:bg-red-700 dark:hover:bg-red-900 dark:focus:ring-red-800"
+                            >
+                                Delete
+                            </button>
+                        </div>
                     </div>
                 </div>
             )}
@@ -206,18 +240,18 @@ const InventoryList = ({ searchTerm }) => {
                 <tbody>
                     {currentItems.map(item => (
                         <tr key={item.id}>
-                            <td className="border px-4 py-2  ">{item.name}</td>
-                            <td className="border px-4 py-2  ">{item.stock}</td>
+                            <td className="border px-4 py-2">{item.name}</td>
+                            <td className="border px-4 py-2">{item.stock}</td>
                             <td className="border px-4 py-2 flex justify-center">
                                 <button
                                     onClick={() => handleEditItem(item.id)}
-                                    className="focus:outline-none text-white bg-yellow-700 hover:bg-yellow-800 focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg mr-2 text-sm px-3 py-2 dark:bg-yellow-600 dark:hover:bg-yellow-700 dark:focus:ring-yellow-900"
+                                    className="focus:outline-none text-white bg-yellow-700 hover:bg-yellow-800 focus:ring-4 focus:ring-yellow-300 font-medium transition-all rounded-lg mr-2 text-sm px-3 py-2 dark:bg-yellow-600 dark:hover:bg-yellow-700 dark:focus:ring-yellow-900"
                                 >
                                     Edit
                                 </button>
                                 <button
                                     onClick={() => handleDelete(item.id)}
-                                    className="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-2 py-1  dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"
+                                    className="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg transition-all text-sm px-2 py-1 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"
                                 >
                                     Delete
                                 </button>
@@ -235,7 +269,10 @@ const InventoryList = ({ searchTerm }) => {
                             <li key={number}>
                                 <button
                                     onClick={() => paginate(number)}
-                                    className={`px-3 py-2 leading-tight ${currentPage === number ? 'bg-blue-600 hover:bg-blue-700 text-white' : 'bg-white text-gray-900 hover:bg-gray-200'} border border-gray-300 rounded-lg ml-2 mt-8`}
+                                    className={`px-4 py-2 leading-tight ${currentPage === number
+                                        ? 'bg-blue-600 hover:bg-blue-700 text-white'
+                                        : 'bg-white text-blue-600 hover:text-blue-700 hover:bg-blue-100'
+                                        } border border-blue-300 rounded-lg ml-2 mt-8 shadow transition duration-300 ease-in-out transform hover:-translate-y-1`}
                                 >
                                     {number}
                                 </button>
