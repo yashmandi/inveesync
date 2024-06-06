@@ -98,7 +98,7 @@ const OrderList = ({ searchTerm }) => {
                     <tr>
                         <th className="border border-2 bg-gray-600 font-extrabold px-4 py-2">ID</th>
                         <th className="border border-2 bg-gray-600 font-extrabold px-4 py-2">
-                            Customer <span> </span>
+                            Customer Name <span> </span>
                             <button onClick={() => handleSort('customer')}>
                                 {isAscending ? '🔼' : '🔽'}
                             </button>

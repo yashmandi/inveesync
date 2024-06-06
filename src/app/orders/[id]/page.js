@@ -40,13 +40,12 @@ const OrderDetails = () => {
       <h1 className="text-2xl font-bold mb-4">Order Details</h1>
       <p><strong>Order ID:</strong> {order.id}</p>
       <p className="mb-6"><strong>Customer:</strong> {order.customer}</p>
-      {/* <h2 className="text-xl font-bold mt-4">Items</h2> */}
       <table className="table-auto w-full">
         <thead>
           <tr>
-            <th className="border border-2 bg-gray-600 font-extrabold px-4 py-2">Item</th>
-            <th className="border border-2 bg-gray-600 font-extrabold px-4 py-2">Quantity</th>
-            <th className="border border-2 bg-gray-600 font-extrabold px-4 py-2">Stock Availability</th>
+            <th className="border bg-gray-600 font-extrabold px-4 py-2">Item</th>
+            <th className="border bg-gray-600 font-extrabold px-4 py-2">Quantity</th>
+            <th className="border bg-gray-600 font-extrabold px-4 py-2">Stock Availability</th>
           </tr>
         </thead>
         <tbody>
