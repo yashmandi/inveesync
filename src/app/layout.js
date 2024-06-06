@@ -7,7 +7,6 @@ import Link from 'next/link';
 import Spinner from '../components/spinner';
 
 export default function RootLayout({ children }) {
-  const [searchTerm, setSearchTerm] = useState('');
   const [loading, setLoading] = useState(false);
 
   const handleNavigation = (url) => {
@@ -41,18 +40,9 @@ export default function RootLayout({ children }) {
               </button>
             </div>
 
-            <div className='flex justify-end'>
-              <input
-                type="text"
-                className='focus:ring-gray-300 text-black hover:bg-gray-200 transition-all font-medium rounded-lg text-sm h-10 px-5 dark:focus:ring-gray-900'
-                placeholder='Search'
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-              />
-            </div>
           </div>
         </div>
-        {loading ? <Spinner /> : React.cloneElement(children, { searchTerm })}
+        {loading ? <Spinner /> : React.cloneElement(children)}
       </body>
     </html>
   );

@@ -6,7 +6,7 @@ import toast from "react-hot-toast";
 import { useRouter } from 'next/navigation';
 import Spinner from "../../components/spinner";
 
-const OrderList = ({ searchTerm }) => {
+const OrderList = () => {
     const [orders, setOrders] = useState(data.orders);
     const [filter, setFilter] = useState('');
     const [sortKey, setSortKey] = useState('');
@@ -15,6 +15,7 @@ const OrderList = ({ searchTerm }) => {
     const [orderToDelete, setOrderToDelete] = useState(null);
     const [loading, setLoading] = useState(false);
     const [currentPage, setCurrentPage] = useState(1);
+    const [searchTerm, setSearchTerm] = useState('');
     const itemsPerPage = 6;
 
     const router = useRouter();
@@ -37,6 +38,10 @@ const OrderList = ({ searchTerm }) => {
 
     const handleFilterChange = (e) => {
         setFilter(e.target.value);
+    };
+
+    const handleSearchChange = (e) => {
+        setSearchTerm(e.target.value);
     };
 
     const handleSort = (key) => {
@@ -87,58 +92,69 @@ const OrderList = ({ searchTerm }) => {
     return (
         <div className="container mx-auto p-4">
             {loading && <Spinner />}
-            <h1 className="text-2xl font-bold mb-4">Order List</h1>
+            <h1 className="text-2xl sm:text-3xl font-bold mb-4">Order List</h1>
 
-            <div className="mb-4">
-                <label htmlFor="statusFilter" className="mr-2 ">Filter by status:</label>
-                <select
-                    id="statusFilter"
-                    onChange={handleFilterChange}
-                    className="focus:outline-none text-gray-900 bg-gray-700 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm h-8 items px-1 w-32 dark:bg-white dark:hover:bg-gray-200 ml-2 dark:focus:ring-gray-900"
-                >
-                    <option value="">All</option>
-                    <option value="Pending">Pending</option>
-                    <option value="Completed">Completed</option>
-                </select>
+            <div className="flex flex-col sm:flex-row justify-between p-2">
+                <div className="mb-2 sm:mb-0">
+                    <label htmlFor="statusFilter" className="mr-2">Filter by status:</label>
+                    <select
+                        id="statusFilter"
+                        onChange={handleFilterChange}
+                        className="focus:outline-none text-gray-900 bg-gray-700 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm h-8 items px-1 w-full sm:w-32 dark:bg-white dark:hover:bg-gray-200 sm:ml-2 dark:focus:ring-gray-900"
+                    >
+                        <option value="">All</option>
+                        <option value="Pending">Pending</option>
+                        <option value="Completed">Completed</option>
+                    </select>
+                </div>
+                <div className="flex flex-col sm:flex-row items-center gap-2 mb-2 sm:mb-2">
+                    <input
+                        type="text"
+                        placeholder="Search orders..."
+                        value={searchTerm}
+                        onChange={handleSearchChange}
+                        className="focus:ring-gray-300 text-black hover:bg-gray-200 transition-all font-medium rounded-lg ml-2 text-sm h-10 px-5 dark:focus:ring-gray-900"
+                    />
+                </div>
             </div>
 
             <table className="table-auto w-full">
                 <thead>
                     <tr>
-                        <th className="border border-2 bg-gray-600 font-extrabold px-4 py-2">ID</th>
-                        <th className="border border-2 bg-gray-600 font-extrabold px-4 py-2">
+                        <th className="border border-2 bg-gray-600 font-extrabold px-2 sm:px-4 py-2">ID</th>
+                        <th className="border border-2 bg-gray-600 font-extrabold px-2 sm:px-4 py-2">
                             Customer Name <span> </span>
                             <button onClick={() => handleSort('customer')}>
                                 {isAscending ? '🔼' : '🔽'}
                             </button>
                         </th>
-                        <th className="border border-2 bg-gray-600 font-extrabold px-4 py-2">Status</th>
-                        <th className="border border-2 bg-gray-600 font-extrabold px-4 py-2">
+                        <th className="border border-2 bg-gray-600 font-extrabold px-2 sm:px-4 py-2">Status</th>
+                        <th className="border border-2 bg-gray-600 font-extrabold px-2 sm:px-4 py-2">
                             Item Count <span> </span>
                             <button onClick={() => handleSort('itemCount')}>
                                 {isAscending ? '🔼' : '🔽'}
                             </button>
                         </th>
-                        <th className="border border-2 bg-gray-600 font-extrabold px-4 py-2">Actions</th>
+                        <th className="border border-2 bg-gray-600 font-extrabold px-2 sm:px-4 py-2">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
                     {currentOrders.map(order => (
                         <tr key={order.id}>
-                            <td className="border px-4 py-2">{order.id}</td>
-                            <td className="border px-4 py-2">{order.customer}</td>
-                            <td className="border px-4 py-2">{order.status}</td>
-                            <td className="border px-4 py-2">{order.items.length}</td>
-                            <td className="border px-4 py-4 flex justify-center">
+                            <td className="border px-2 sm:px-4 py-2">{order.id}</td>
+                            <td className="border px-2 sm:px-4 py-2">{order.customer}</td>
+                            <td className="border px-2 sm:px-4 py-2">{order.status}</td>
+                            <td className="border px-2 sm:px-4 py-2">{order.items.length}</td>
+                            <td className="border px-2 sm:px-4 py-4 flex flex-col sm:flex-row justify-center">
                                 <button
                                     onClick={() => router.push(`/orders/${order.id}`)}
-                                    className="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium transition-all rounded-lg text-sm px-3 py-2 mr-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-900"
+                                    className="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium transition-all rounded-lg text-sm px-3 py-2 mb-2 sm:mb-0 sm:mr-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-900"
                                 >
                                     Show Details
                                 </button>
                                 <button
                                     onClick={() => handleDelete(order.id)}
-                                    className="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg transition-all text-sm px-3 py-2 mr-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"
+                                    className="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg transition-all text-sm px-3 py-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"
                                 >
                                     Delete
                                 </button>
@@ -180,7 +196,7 @@ const OrderList = ({ searchTerm }) => {
                             <li key={number}>
                                 <button
                                     onClick={() => paginate(number)}
-                                    className={`px-4 py-2 leading-tight ${currentPage === number
+                                    className={`px-2 sm:px-4 py-2 leading-tight ${currentPage === number
                                         ? 'bg-blue-600 hover:bg-blue-700 text-white'
                                         : 'bg-white text-blue-600 hover:text-blue-700 hover:bg-blue-100'
                                         } border border-blue-300 rounded-lg ml-2 mt-8 shadow transition duration-300 ease-in-out transform hover:-translate-y-1`}

@@ -5,7 +5,7 @@ import { data } from "../../utils/data";
 import toast from "react-hot-toast";
 import Spinner from "../../components/spinner";
 
-const InventoryList = ({ searchTerm }) => {
+const InventoryList = () => {
     const [items, setItems] = useState(data.items);
     const [filter, setFilter] = useState('');
     const [newItem, setNewItem] = useState({ name: '', stock: '' });
@@ -15,6 +15,7 @@ const InventoryList = ({ searchTerm }) => {
     const [itemToDelete, setItemToDelete] = useState(null);
     const [loading, setLoading] = useState(false);
     const [currentPage, setCurrentPage] = useState(1);
+    const [searchTerm, setSearchTerm] = useState('');
     const itemsPerPage = 8;
 
     const handleDelete = (id) => {
@@ -35,6 +36,10 @@ const InventoryList = ({ searchTerm }) => {
 
     const handleFilterChange = (e) => {
         setFilter(e.target.value);
+    };
+
+    const handleSearchChange = (e) => {
+        setSearchTerm(e.target.value);
     };
 
     const handleAddItem = (e) => {
@@ -102,28 +107,37 @@ const InventoryList = ({ searchTerm }) => {
     return (
         <div className="container mx-auto p-4">
             {loading && <Spinner />}
-            <h1 className="text-2xl font-bold mb-4">Inventory List</h1>
+            <h1 className="text-2xl sm:text-3xl font-bold mb-4">Inventory List</h1>
 
-            <div className="flex flex-row justify-between p-2">
-                <div className="">
-                    <label htmlFor="stockFilter" className="mr-2 transition-all">Filter by stock:</label>
+            <div className="flex flex-col sm:flex-row justify-between p-2">
+                <div className="mb-2 sm:mb-0">
+                    <label htmlFor="stockFilter" className="mr-2">Filter by stock:</label>
                     <select
                         id="stockFilter"
                         onChange={handleFilterChange}
-                        className="focus:outline-none text-gray-900 bg-gray-700 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm h-8 items px-1 w-32 dark:bg-white dark:hover:bg-gray-200 ml-2 dark:focus:ring-gray-900"
+                        className="focus:outline-none text-gray-900 bg-gray-700 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm h-8 items px-1 w-full sm:w-32 dark:bg-white dark:hover:bg-gray-200 sm:ml-2 dark:focus:ring-gray-900"
                     >
                         <option value="">All</option>
                         <option value="inStock">In Stock</option>
                         <option value="outOfStock">Out of Stock</option>
                     </select>
                 </div>
+                <div className="flex flex-col sm:flex-row items-center gap-2 mb-2 sm:mb-2">
 
-                <button
-                    onClick={() => setIsModalOpen(true)}
-                    className="focus:outline-none text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 transition-all py-2.5 mb-4 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-900"
-                >
-                    Add New Item
-                </button>
+                    <button
+                        onClick={() => setIsModalOpen(true)}
+                        className="focus:outline-none text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 transition-all py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-900"
+                    >
+                        Add New Item
+                    </button>
+                    <input
+                        type="text"
+                        placeholder="Search items..."
+                        value={searchTerm}
+                        onChange={handleSearchChange}
+                        className="focus:ring-gray-300 text-black hover:bg-gray-200 transition-all font-medium rounded-lg ml-2 text-sm h-10 px-5 dark:focus:ring-gray-900"
+                    />
+                </div>
             </div>
 
             {typeof window !== 'undefined' && isModalOpen && (
@@ -232,20 +246,20 @@ const InventoryList = ({ searchTerm }) => {
             <table className="table-auto w-full">
                 <thead>
                     <tr>
-                        <th className="border border-2 bg-gray-600 font-extrabold px-4 py-2">Items</th>
-                        <th className="border border-2 bg-gray-600 font-extrabold px-4 py-2">Stock</th>
-                        <th className="border border-2 bg-gray-600 font-extrabold px-4 py-2">Actions</th>
+                        <th className="border border-2 bg-gray-600 font-extrabold px-2 sm:px-4 py-2">Items</th>
+                        <th className="border border-2 bg-gray-600 font-extrabold px-2 sm:px-4 py-2">Stock</th>
+                        <th className="border border-2 bg-gray-600 font-extrabold px-2 sm:px-4 py-2">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
                     {currentItems.map(item => (
                         <tr key={item.id}>
-                            <td className="border px-4 py-2">{item.name}</td>
-                            <td className="border px-4 py-2">{item.stock}</td>
-                            <td className="border px-4 py-2 flex justify-center">
+                            <td className="border px-2 sm:px-4 py-2">{item.name}</td>
+                            <td className="border px-2 sm:px-4 py-2">{item.stock}</td>
+                            <td className="border px-2 sm:px-4 py-2 flex flex-col sm:flex-row justify-center">
                                 <button
                                     onClick={() => handleEditItem(item.id)}
-                                    className="focus:outline-none text-white bg-yellow-700 hover:bg-yellow-800 focus:ring-4 focus:ring-yellow-300 font-medium transition-all rounded-lg mr-2 text-sm px-3 py-2 dark:bg-yellow-600 dark:hover:bg-yellow-700 dark:focus:ring-yellow-900"
+                                    className="focus:outline-none text-white bg-yellow-700 hover:bg-yellow-800 focus:ring-4 focus:ring-yellow-300 font-medium transition-all rounded-lg mb-2 sm:mb-0 sm:mr-2 text-sm px-3 py-2 dark:bg-yellow-600 dark:hover:bg-yellow-700 dark:focus:ring-yellow-900"
                                 >
                                     Edit
                                 </button>
@@ -269,7 +283,7 @@ const InventoryList = ({ searchTerm }) => {
                             <li key={number}>
                                 <button
                                     onClick={() => paginate(number)}
-                                    className={`px-4 py-2 leading-tight ${currentPage === number
+                                    className={`px-2 sm:px-4 py-2 leading-tight ${currentPage === number
                                         ? 'bg-blue-600 hover:bg-blue-700 text-white'
                                         : 'bg-white text-blue-600 hover:text-blue-700 hover:bg-blue-100'
                                         } border border-blue-300 rounded-lg ml-2 mt-8 shadow transition duration-300 ease-in-out transform hover:-translate-y-1`}

@@ -73,7 +73,7 @@ export const data = {
                 { id: 4, name: "Pliers", quantity: 4 },
                 { id: 5, name: "Drill", quantity: 2 }
             ],
-            status: "Shipped"
+            status: "Pending"
         },
         {
             id: 5,
@@ -82,7 +82,7 @@ export const data = {
                 { id: 6, name: "Saw", quantity: 3 },
                 { id: 7, name: "Level", quantity: 1 }
             ],
-            status: "Completed"
+            status: "Pending"
         },
         {
             id: 6,
@@ -98,16 +98,22 @@ export const data = {
             customer: "Emma Watson",
             items: [
                 { id: 10, name: "Utility Knife", quantity: 4 },
-                { id: 11, name: "Allen Wrench Set", quantity: 2 }
+                { id: 11, name: "Allen Wrench Set", quantity: 2 },
+                { id: 9, name: "Chisel", quantity: 3 },
+                { id: 8, name: "Tape Measure", quantity: 5 },
             ],
-            status: "Shipped"
+            status: "Completed"
         },
         {
             id: 8,
             customer: "Robert Downey Jr.",
             items: [
                 { id: 12, name: "Handsaw", quantity: 2 },
-                { id: 13, name: "Circular Saw", quantity: 1 }
+                { id: 13, name: "Circular Saw", quantity: 1 },
+                { id: 9, name: "Chisel", quantity: 3 },
+                { id: 8, name: "Tape Measure", quantity: 5 },
+                { id: 9, name: "Chisel", quantity: 3 },
+                { id: 8, name: "Tape Measure", quantity: 5 },
             ],
             status: "Completed"
         },
@@ -116,7 +122,6 @@ export const data = {
             customer: "Scarlett Johansson",
             items: [
                 { id: 14, name: "Claw Hammer", quantity: 3 },
-                { id: 15, name: "Sledgehammer", quantity: 1 }
             ],
             status: "Pending"
         },
@@ -127,7 +132,7 @@ export const data = {
                 { id: 16, name: "Adjustable Wrench", quantity: 4 },
                 { id: 17, name: "Socket Wrench Set", quantity: 2 }
             ],
-            status: "Shipped"
+            status: "Completed"
         },
         {
             id: 11,
@@ -143,6 +148,9 @@ export const data = {
             customer: "Will Smith",
             items: [
                 { id: 20, name: "Pry Bar", quantity: 3 },
+                { id: 18, name: "Pipe Wrench", quantity: 2 },
+                { id: 19, name: "Torque Wrench", quantity: 1 },
+                { id: 19, name: "Hand Drill", quantity: 1 },
                 { id: 21, name: "Crowbar", quantity: 1 }
             ],
             status: "Pending"
@@ -154,14 +162,13 @@ export const data = {
                 { id: 22, name: "Hand Drill", quantity: 4 },
                 { id: 23, name: "Power Drill", quantity: 2 }
             ],
-            status: "Shipped"
+            status: "Completed"
         },
         {
             id: 14,
             customer: "Keanu Reeves",
             items: [
                 { id: 24, name: "Heat Gun", quantity: 2 },
-                { id: 25, name: "Hot Glue Gun", quantity: 1 }
             ],
             status: "Completed"
         },
