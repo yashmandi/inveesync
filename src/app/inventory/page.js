@@ -82,32 +82,40 @@ const InventoryList = ({ searchTerm }) => {
         pageNumbers.push(i);
     }
 
-    const paginate = (pageNumber) => setCurrentPage(pageNumber);
+    const paginate = (pageNumber) => {
+        setLoading(true);
+        setTimeout(() => {
+            setCurrentPage(pageNumber);
+            setLoading(false);
+        }, 500);
+    }
 
     return (
         <div className="container mx-auto p-4">
             {loading && <Spinner />}
             <h1 className="text-2xl font-bold mb-4">Inventory List</h1>
 
-            <div className="mb-4">
-                <label htmlFor="stockFilter" className="mr-2">Filter by stock:</label>
-                <select
-                    id="stockFilter"
-                    onChange={handleFilterChange}
-                    className="focus:outline-none text-gray-900 bg-gray-700 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm h-8 items px-1 w-32 dark:bg-white dark:hover:bg-gray-200 ml-2 dark:focus:ring-gray-900"
-                >
-                    <option value="">All</option>
-                    <option value="inStock">In Stock</option>
-                    <option value="outOfStock">Out of Stock</option>
-                </select>
-            </div>
+            <div className="flex flex-row justify-between p-2">
+                <div className="">
+                    <label htmlFor="stockFilter" className="mr-2">Filter by stock:</label>
+                    <select
+                        id="stockFilter"
+                        onChange={handleFilterChange}
+                        className="focus:outline-none text-gray-900 bg-gray-700 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm h-8 items px-1 w-32 dark:bg-white dark:hover:bg-gray-200 ml-2 dark:focus:ring-gray-900"
+                    >
+                        <option value="">All</option>
+                        <option value="inStock">In Stock</option>
+                        <option value="outOfStock">Out of Stock</option>
+                    </select>
+                </div>
 
-            <button
-                onClick={() => setIsModalOpen(true)}
-                className="focus:outline-none text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-900"
-            >
-                Add New Item
-            </button>
+                <button
+                    onClick={() => setIsModalOpen(true)}
+                    className="focus:outline-none text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-4 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-900"
+                >
+                    Add New Item
+                </button>
+            </div>
 
             {typeof window !== 'undefined' && isModalOpen && (
                 <div className="fixed inset-0 backdrop-blur-sm bg-opacity-50 flex justify-center items-center">
