@@ -17,9 +17,9 @@ const OrderList = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const [searchTerm, setSearchTerm] = useState('');
     const itemsPerPage = 6;
-
     const router = useRouter();
 
+    // Delete order 
     const handleDelete = (id) => {
         setOrderToDelete(id);
         setIsDeleteModalOpen(true);
@@ -49,6 +49,7 @@ const OrderList = () => {
         setIsAscending(prev => !prev);
     };
 
+    // Sorting Orders
     const sortedOrders = [...orders].sort((a, b) => {
         if (sortKey === 'customer') {
             return isAscending
@@ -62,6 +63,7 @@ const OrderList = () => {
         return 0;
     });
 
+    // Filtering Orders
     const filteredOrders = sortedOrders.filter(order => {
         if (filter) {
             return order.status.toLowerCase() === filter.toLowerCase();
@@ -72,6 +74,7 @@ const OrderList = () => {
         return true;
     });
 
+    // Pagination
     const indexOfLastOrder = currentPage * itemsPerPage;
     const indexOfFirstOrder = indexOfLastOrder - itemsPerPage;
     const currentOrders = filteredOrders.slice(indexOfFirstOrder, indexOfLastOrder);
@@ -92,9 +95,9 @@ const OrderList = () => {
     return (
         <div className="container mx-auto p-4">
             {loading && <Spinner />}
-            <h1 className="text-2xl sm:text-3xl font-bold mb-4">Order List</h1>
+            <h1 className="text-3xl sm:text-2xl text-center font-bold mb-4">Order List</h1>
 
-            <div className="flex flex-col sm:flex-row justify-between p-2">
+            <div className="flex flex-col sm:flex-row justify-between">
                 <div className="mb-2 sm:mb-0">
                     <label htmlFor="statusFilter" className="mr-2">Filter by status:</label>
                     <select

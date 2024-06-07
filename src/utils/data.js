@@ -44,7 +44,8 @@ export const data = {
             customer: "Zendaya",
             items: [
                 { id: 1, name: "Hammer", quantity: 5 },
-                { id: 2, name: "Wrench", quantity: 3 }
+                { id: 2, name: "Wrench", quantity: 3 },
+                { id: 3, name: "Screwdriver", quantity: 1 }
             ],
             status: "Pending"
         },
@@ -53,7 +54,9 @@ export const data = {
             customer: "Leonardo DiCaprio",
             items: [
                 { id: 1, name: "Hammer", quantity: 2 },
-                { id: 3, name: "Screwdriver", quantity: 1 }
+                { id: 3, name: "Screwdriver", quantity: 1 },
+                { id: 1, name: "Hammer", quantity: 5 },
+                { id: 2, name: "Wrench", quantity: 3 }
             ],
             status: "Completed"
         },
@@ -71,7 +74,6 @@ export const data = {
             customer: "Dwayne Johnson",
             items: [
                 { id: 4, name: "Pliers", quantity: 4 },
-                { id: 5, name: "Drill", quantity: 2 }
             ],
             status: "Pending"
         },
@@ -177,14 +179,16 @@ export const data = {
             customer: "Gal Gadot",
             items: [
                 { id: 26, name: "Flashlight", quantity: 3 },
-                { id: 27, name: "Headlamp", quantity: 1 }
+                { id: 27, name: "Headlamp", quantity: 1 },
+                { id: 24, name: "Heat Gun", quantity: 2 },
+                { id: 23, name: "Power Drill", quantity: 2 }
             ],
             status: "Pending"
         }
     ],
     items: [
-        { id: 1, name: "Hammer", stock: 50 },
-        { id: 2, name: "Wrench", stock: 40 },
+        { id: 1, name: "Hammer", stock: 10 },
+        { id: 2, name: "Wrench", stock: 45 },
         { id: 3, name: "Screwdriver", stock: 30 },
         { id: 4, name: "Pliers", stock: 25 },
         { id: 5, name: "Drill", stock: 20 },
@@ -195,20 +199,20 @@ export const data = {
         { id: 10, name: "Utility Knife", stock: 40 },
         { id: 11, name: "Allen Wrench Set", stock: 20 },
         { id: 12, name: "Handsaw", stock: 25 },
-        { id: 13, name: "Circular Saw", stock: 15 },
+        { id: 13, name: "Circular Saw", stock: 45 },
         { id: 14, name: "Claw Hammer", stock: 50 },
         { id: 15, name: "Sledgehammer", stock: 10 },
-        { id: 16, name: "Adjustable Wrench", stock: 35 },
+        { id: 16, name: "Adjustable Wrench", stock: 0 },
         { id: 17, name: "Socket Wrench Set", stock: 20 },
-        { id: 18, name: "Pipe Wrench", stock: 15 },
+        { id: 18, name: "Pipe Wrench", stock: 0 },
         { id: 19, name: "Torque Wrench", stock: 10 },
-        { id: 20, name: "Pry Bar", stock: 25 },
+        { id: 20, name: "Pry Bar", stock: 10 },
         { id: 21, name: "Crowbar", stock: 20 },
         { id: 22, name: "Hand Drill", stock: 30 },
         { id: 23, name: "Power Drill", stock: 20 },
         { id: 24, name: "Heat Gun", stock: 15 },
-        { id: 25, name: "Hot Glue Gun", stock: 20 },
-        { id: 26, name: "Flashlight", stock: 50 },
-        { id: 27, name: "Headlamp", stock: 30 }
+        { id: 25, name: "Hot Glue Gun", stock: 0 },
+        { id: 26, name: "Flashlight", stock: 10 },
+        { id: 27, name: "Headlamp", stock: 0 }
     ]
 };

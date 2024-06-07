@@ -21,10 +21,10 @@ export default function RootLayout({ children }) {
       <Toaster position="top-center" />
       <body>
         <div className="container mx-auto p-2">
-          <h1 className="text-4xl font-bold mb-12 text-center">
+          <h1 className="text-4xl font-bold mb-10 text-center">
             Inventory and Manufacturing Management System
           </h1>
-          <div className="flex flex-col sm:flex-row sm:justify-between mb-4 space-y-4 sm:space-y-0 sm:space-x-4">
+          <div className="flex flex-col sm:flex-row sm:justify-between space-y-4 sm:space-y-0 sm:space-x-4">
             <div className='flex flex-col sm:flex-row sm:space-x-4'>
               <button
                 onClick={() => handleNavigation('/inventory')}

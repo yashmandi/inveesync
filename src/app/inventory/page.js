@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { data } from "../../utils/data";
 import toast from "react-hot-toast";
 import Spinner from "../../components/spinner";
@@ -18,30 +18,7 @@ const InventoryList = () => {
     const [searchTerm, setSearchTerm] = useState('');
     const itemsPerPage = 8;
 
-    const handleDelete = (id) => {
-        setItemToDelete(id);
-        setIsDeleteModalOpen(true);
-    };
-
-    const confirmDelete = () => {
-        setLoading(true);
-        setTimeout(() => {
-            setItems(items.filter(item => item.id !== itemToDelete));
-            setLoading(false);
-            toast.success('Item deleted successfully!');
-            setIsDeleteModalOpen(false);
-            setItemToDelete(null);
-        }, 1000);
-    };
-
-    const handleFilterChange = (e) => {
-        setFilter(e.target.value);
-    };
-
-    const handleSearchChange = (e) => {
-        setSearchTerm(e.target.value);
-    };
-
+    // Add Item
     const handleAddItem = (e) => {
         e.preventDefault();
         setLoading(true);
@@ -59,6 +36,7 @@ const InventoryList = () => {
         }, 1000);
     };
 
+    // Edit Item
     const handleEditItem = (id) => {
         const itemToEdit = items.find(item => item.id === id);
         setEditItem(itemToEdit);
@@ -75,6 +53,32 @@ const InventoryList = () => {
         }, 1000);
     };
 
+    // Delete Item
+    const handleDelete = (id) => {
+        setItemToDelete(id);
+        setIsDeleteModalOpen(true);
+    };
+
+    const confirmDelete = () => {
+        setLoading(true);
+        setTimeout(() => {
+            setItems(items.filter(item => item.id !== itemToDelete));
+            setLoading(false);
+            toast.success('Item deleted successfully!');
+            setIsDeleteModalOpen(false);
+            setItemToDelete(null);
+        }, 1000);
+    };
+
+    // Filtering of items
+    const handleFilterChange = (e) => {
+        setFilter(e.target.value);
+    };
+
+    const handleSearchChange = (e) => {
+        setSearchTerm(e.target.value);
+    };
+
     const filteredItems = items.filter(item => {
         if (filter === 'inStock') {
             return item.stock > 0;
@@ -87,6 +91,7 @@ const InventoryList = () => {
         }
     });
 
+    // Pagination
     const indexOfLastItem = currentPage * itemsPerPage;
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
     const currentItems = filteredItems.slice(indexOfFirstItem, indexOfLastItem);
@@ -107,11 +112,12 @@ const InventoryList = () => {
     return (
         <div className="container mx-auto p-4">
             {loading && <Spinner />}
-            <h1 className="text-2xl sm:text-3xl font-bold mb-4">Inventory List</h1>
+            <h1 className="text-3xl sm:text-2xl text-center font-bold mb-4">Inventory</h1>
 
-            <div className="flex flex-col sm:flex-row justify-between p-2">
+
+            <div className="flex flex-col sm:flex-row justify-between">
                 <div className="mb-2 sm:mb-0">
-                    <label htmlFor="stockFilter" className="mr-2">Filter by stock:</label>
+                    <label htmlFor="stockFilter" className="mr-2 text-lg">Filter by stock:</label>
                     <select
                         id="stockFilter"
                         onChange={handleFilterChange}
@@ -122,8 +128,7 @@ const InventoryList = () => {
                         <option value="outOfStock">Out of Stock</option>
                     </select>
                 </div>
-                <div className="flex flex-col sm:flex-row items-center gap-2 mb-2 sm:mb-2">
-
+                <div className="flex flex-col sm:flex-row items-center gap-2 mb-2 sm:mb-4">
                     <button
                         onClick={() => setIsModalOpen(true)}
                         className="focus:outline-none text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 transition-all py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-900"
