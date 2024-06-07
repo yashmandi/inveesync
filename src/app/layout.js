@@ -3,7 +3,6 @@
 import React, { useState } from 'react';
 import './globals.css';
 import { Toaster } from 'react-hot-toast';
-import Link from 'next/link';
 import Spinner from '../components/spinner';
 
 export default function RootLayout({ children }) {
@@ -18,7 +17,7 @@ export default function RootLayout({ children }) {
 
   return (
     <html lang="en">
-      <Toaster position="top-center" />
+      <Toaster position="top-center" /> 
       <body>
         <div className="container mx-auto p-2">
           <h1 className="text-4xl font-bold mb-10 text-center">

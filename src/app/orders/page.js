@@ -150,7 +150,12 @@ const OrderList = () => {
                             <td className="border px-2 sm:px-4 py-2">{order.items.length}</td>
                             <td className="border px-2 sm:px-4 py-4 flex flex-col sm:flex-row justify-center">
                                 <button
-                                    onClick={() => router.push(`/orders/${order.id}`)}
+                                    onClick={() => {
+                                        setLoading(true)
+                                        setTimeout(() => {
+                                            router.push(`/orders/${order.id}`)
+                                        }, 500)
+                                    }}
                                     className="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium transition-all rounded-lg text-sm px-3 py-2 mb-2 sm:mb-0 sm:mr-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-900"
                                 >
                                     Show Details
