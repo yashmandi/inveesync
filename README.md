@@ -17,3 +17,23 @@ Before you begin, ensure you have the following installed on your machine:
 
    ```bash
    git clone <repository_url>
+   cd inveesync
+
+2. Install dependencies:
+
+   ```bash
+   npm install
+   # OR
+   yarn install
+
+### Running the development server
+
+   To run the development server, use the following command:
+   ```bash
+   npm run dev
+   # OR
+   yarn dev
+   ```
+This will start the development server at http://localhost:3000.
+
+   
