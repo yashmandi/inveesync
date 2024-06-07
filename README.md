@@ -2,6 +2,8 @@
 
 This project is a simple inventory management system built with React, Next.js and TailwindCSS.
 
+### Kindly check the `Demo-Video.mp4` to watch the working of this assignment, and `InveeSync-Assignment-Doc.pdf` to see the document.
+
 ## Getting Started
 
 ### Prerequisites
@@ -35,5 +37,6 @@ Before you begin, ensure you have the following installed on your machine:
    yarn dev
    ```
 This will start the development server at http://localhost:3000.
+
 
    
